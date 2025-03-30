@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: [ main ]
 
+# Set permissions for the GITHUB_TOKEN
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -55,6 +60,7 @@ jobs:
         folder: dist
         branch: gh-pages
         clean: true
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     # Optional: Add a step to deploy to a CDN
     # - name: Deploy to CDN
