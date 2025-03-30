@@ -1,0 +1,96 @@
+catalog_version: "0.1.0"
+version: "0.1.0"
+title: "Go CLI Release Process"
+description: "Configure versioning and distribution for your Go CLI application"
+
+context:
+  instruction_type: "deployment"
+  applicable_to: "Go CLI projects ready for distribution"
+  summary: "Set up semantic versioning, automated releases, and distribution channels."
+  preconditions:
+    - "Go CLI project with core functionality implemented and tested"
+    - "CI pipeline configured with GitHub Actions"
+  postconditions:
+    - "Versioning system implemented"
+    - "Release process automated"
+    - "Distribution channels configured"
+
+tasks:
+  - id: "implement_versioning"
+    title: "Implement semantic versioning"
+    description: "Create version handling system"
+    steps:
+      - "Create version package with version variables (Version, Commit, BuildDate)"
+      - "Add display methods for version information"
+      - "Update version command to use the package"
+      - "Follow semantic versioning principles"
+    acceptance_criteria:
+      - "Version information accessible via command"
+      - "Version details embedded at build time"
+    
+  - id: "create_makefile"
+    title: "Create Makefile"
+    description: "Set up Makefile with versioning support"
+    steps:
+      - "Create Makefile with build variables for versioning"
+      - "Add version injection using ldflags"
+      - "Include build targets for multiple platforms"
+    acceptance_criteria:
+      - "Makefile handles version injection"
+      - "Cross-platform builds supported"
+    
+  - id: "setup_goreleaser"
+    title: "Configure GoReleaser"
+    description: "Set up automated release tool"
+    steps:
+      - "Install GoReleaser and create configuration file"
+      - "Configure builds for multiple platforms"
+      - "Configure archive formats and GitHub release settings"
+    acceptance_criteria:
+      - "GoReleaser configured"
+      - "Release builds automated"
+    
+  - id: "setup_github_workflow"
+    title: "Configure GitHub release workflow"
+    description: "Set up automated releases via GitHub Actions"
+    steps:
+      - "Create release workflow triggered by tags"
+      - "Set up signing for release artifacts"
+    acceptance_criteria:
+      - "GitHub Actions releases on new tags"
+      - "Releases properly signed"
+    
+  - id: "setup_distribution"
+    title: "Set up distribution channels"
+    description: "Configure package distribution"
+    steps:
+      - "Configure Homebrew tap"
+      - "Set up Docker image publication"
+      - "Configure package manager integration"
+    acceptance_criteria:
+      - "Multiple distribution channels available"
+    
+  - id: "document_release"
+    title: "Document release process"
+    description: "Create release documentation"
+    steps:
+      - "Document release procedures and versioning policies"
+      - "Include rollback procedures for failed releases"
+    acceptance_criteria:
+      - "Release process documented"
+      - "Troubleshooting guidance provided"
+
+examples:
+  - title: "Semantic Versioning Guidelines"
+    description: "How to make version decisions"
+    content: |
+      ```
+      # Semantic Versioning
+      - MAJOR (x.0.0): Breaking changes to commands or APIs
+      - MINOR (0.x.0): New features (backward-compatible)
+      - PATCH (0.0.x): Bug fixes and minor improvements
+      
+      # Version Tagging
+      git tag -a v0.1.0 -m "Release v0.1.0"
+      git push origin v0.1.0
+      ``` 

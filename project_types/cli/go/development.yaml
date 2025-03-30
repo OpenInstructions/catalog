@@ -1,0 +1,103 @@
+catalog_version: "0.1.0"
+version: "0.1.0"
+title: "Go CLI Development"
+description: "Implement core functionality for your Go CLI application"
+
+context:
+  instruction_type: "implementation"
+  applicable_to: "Go CLI projects with Cobra"
+  summary: "Implement core functionality, focusing on command structure, error handling, and configuration."
+  preconditions:
+    - "Go CLI project initialized with Cobra"
+    - "Basic command structure established"
+  postconditions:
+    - "Complete CLI with multiple commands"
+    - "Error handling and logging"
+    - "Configuration via files and environment variables"
+
+tasks:
+  - id: "organize_commands"
+    title: "Organize command structure"
+    description: "Reorganize commands for better maintainability"
+    steps:
+      - "Create cmd package: `mkdir -p cmd/myapp/cmd`"
+      - "Move root.go and version.go to this directory, update package to `cmd`"
+      - "Update main.go to import the cmd package and call Execute()"
+    acceptance_criteria:
+      - "Commands organized in dedicated cmd package"
+      - "Application builds successfully"
+    
+  - id: "implement_config"
+    title: "Add configuration handling"
+    description: "Use Viper for config management"
+    steps:
+      - "Create config package with Config struct (LogLevel, OutputFormat, etc.)"
+      - "Add LoadConfig function to support files, env vars, and flags"
+      - "Integrate with root command's PersistentPreRunE"
+    acceptance_criteria:
+      - "Configuration system works with flags, env vars, and files"
+      - "Secure handling of sensitive configuration values"
+    
+  - id: "add_logging"
+    title: "Add logging system"
+    description: "Implement structured logging"
+    steps:
+      - "Add zerolog library and create logger package"
+      - "Create setup function with configurable levels and formats"
+      - "Ensure sensitive data is never logged"
+    acceptance_criteria:
+      - "Logging system with configurable levels"
+      - "Structured logging with different output formats"
+    
+  - id: "create_commands"
+    title: "Implement core commands"
+    description: "Create the main application commands"
+    steps:
+      - "Create get and create commands with proper flags"
+      - "Implement command logic with error handling"
+      - "Extract shared business logic to internal packages"
+    acceptance_criteria:
+      - "Core commands implemented with proper flags"
+      - "Commands follow consistent patterns"
+    
+  - id: "add_output_formatters"
+    title: "Add output formatters"
+    description: "Support multiple output formats"
+    steps:
+      - "Create output package with formatters for text, JSON, YAML"
+      - "Add helper functions for consistent command output"
+    acceptance_criteria:
+      - "Multiple output formats supported"
+      - "Consistent output across commands"
+    
+  - id: "error_handling"
+    title: "Implement error handling"
+    description: "Create unified error handling system"
+    steps:
+      - "Create errors package with error types and codes"
+      - "Implement centralized error handling in commands"
+      - "Ensure user-friendly messages without sensitive information"
+    acceptance_criteria:
+      - "Consistent error handling"
+      - "User-friendly error messages"
+    
+  - id: "secure_handling"
+    title: "Add security features"
+    description: "Implement security best practices"
+    steps:
+      - "Create secure package for handling sensitive data"
+      - "Add input validation to prevent injection attacks"
+    acceptance_criteria:
+      - "Sensitive data properly protected"
+      - "Input validation on all command parameters"
+
+examples:
+  - title: "Command Structure"
+    description: "Essential command organization"
+    content: |
+      ```
+      cmd/myapp/
+      ├── cmd/      # Package for all command definitions
+      │   ├── root.go, version.go, get.go, create.go
+      └── main.go   # Application entry point
+      ``` 

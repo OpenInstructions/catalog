@@ -1,0 +1,118 @@
+catalog_version: "0.1.0"
+version: "0.1.0"
+title: "Go CLI Project Setup"
+description: "Initialize a Go CLI project using the Cobra library"
+
+context:
+  instruction_type: "creation"
+  applicable_to: "New Go CLI projects"
+  summary: "Create a Go CLI project with Cobra, including essential structure and commands."
+  preconditions:
+    - "Go 1.16+ installed"
+    - "Git installed"
+  postconditions:
+    - "Working Go module with Cobra library"
+    - "Basic command structure defined"
+
+tasks:
+  - id: "create_project_structure"
+    title: "Create project structure"
+    description: "Initialize the Go module and set up directory structure"
+    steps:
+      - "Create project directory and initialize Go module"
+      - "Create standard directories (cmd, internal, pkg, docs)"
+    acceptance_criteria:
+      - "Project structure created with appropriate folders"
+      - "go.mod file exists with correct module name"
+    
+  - id: "install_cobra"
+    title: "Install Cobra library"
+    description: "Add Cobra and Viper as dependencies"
+    steps:
+      - "Add Cobra and Viper packages to go.mod"
+    acceptance_criteria:
+      - "Dependencies added to go.mod file"
+    
+  - id: "scaffold_root_command"
+    title: "Create root command"
+    description: "Implement the root command file"
+    steps:
+      - "Create cmd/myapp/root.go with basic Cobra root command"
+      - "Include configuration setup with Viper"
+      - "Add Execute() function for command execution"
+    acceptance_criteria:
+      - "root.go file created with command structure"
+    
+  - id: "create_main_file"
+    title: "Create main file"
+    description: "Create the entry point file"
+    steps:
+      - "Create cmd/myapp/main.go that calls Execute()"
+    acceptance_criteria:
+      - "main.go file created that calls Execute function"
+    
+  - id: "add_version_command"
+    title: "Add version command"
+    description: "Create a version subcommand"
+    steps:
+      - "Create version.go with a version subcommand"
+      - "Register it with the root command"
+    acceptance_criteria:
+      - "version command implemented and registered"
+    
+  - id: "test_build"
+    title: "Test the build"
+    description: "Build and test your CLI application"
+    steps:
+      - "Build the app and test basic commands"
+    acceptance_criteria:
+      - "Application builds and runs correctly"
+    
+  - id: "initialize_git"
+    title: "Set up Git repository"
+    description: "Initialize and configure Git"
+    steps:
+      - "Create .gitignore for Go projects"
+      - "Initialize Git repository and make initial commit"
+    acceptance_criteria:
+      - "Git repository initialized with initial commit"
+
+examples:
+  - title: "Project Structure"
+    description: "The basic Go CLI project structure"
+    content: |
+      ```
+      myapp/
+      ├── cmd/myapp/     # Command implementations
+      │   ├── main.go    # Entry point
+      │   ├── root.go    # Root command
+      │   └── version.go # Version command
+      ├── internal/      # Private packages
+      ├── pkg/           # Public packages
+      ├── docs/          # Documentation
+      ├── .gitignore
+      └── go.mod         # Module definition
+      ```
+
+  - title: "CLI Output"
+    description: "Expected output from help command:"
+    content: |
+      ```
+      A longer description that spans multiple lines and likely contains
+      examples and usage of using your application.
+
+      Usage:
+        myapp [command]
+
+      Available Commands:
+        completion  Generate the autocompletion script for the specified shell
+        help        Help about any command
+        version     Print the version number
+
+      Flags:
+        --config string   config file (default is $HOME/.myapp.yaml)
+        -h, --help            help for myapp
+        -t, --toggle          Help message for toggle
+
+      Use "myapp [command] --help" for more information about a command.
+      ``` 

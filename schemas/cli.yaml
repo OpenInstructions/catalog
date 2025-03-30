@@ -1,0 +1,98 @@
+catalog_version: "0.1.0"
+project_type: "cli"
+title: "Command Line Interface Application"
+description: "A complete CLI application with commands, flags, and robust error handling"
+
+variants:
+  - id: "language"
+    title: "Programming Language"
+    options:
+      - id: "go"
+        title: "Go"
+        description: "Implement using Go and Cobra library for CLI framework"
+  
+  - id: "ci_platform"
+    title: "CI Platform"
+    options:
+      - id: "github_actions"
+        title: "GitHub Actions"
+        description: "Configure CI/CD using GitHub Actions workflows"
+
+phases:
+  - id: "setup"
+    title: "Project Setup"
+    description: "Initialize project structure, define commands, and set up dependencies"
+    dependencies: []
+    variants:
+      - variant: "language"
+        options:
+          - option: "go"
+            path: "project_types/cli/go/setup.yaml"
+            version: "0.1.0"
+  
+  - id: "development"
+    title: "Core Implementation"
+    description: "Implement CLI commands, flags, configuration, and business logic"
+    dependencies: ["setup"]
+    variants:
+      - variant: "language"
+        options:
+          - option: "go"
+            path: "project_types/cli/go/development.yaml"
+            version: "0.1.0"
+  
+  - id: "testing"
+    title: "Testing"
+    description: "Create comprehensive tests for the CLI application"
+    dependencies: ["development"]
+    variants:
+      - variant: "language"
+        options:
+          - option: "go"
+            path: "project_types/cli/go/testing.yaml"
+            version: "0.1.0"
+  
+  - id: "ci_setup"
+    title: "CI Configuration"
+    description: "Set up continuous integration pipeline"
+    dependencies: ["testing"]
+    variants:
+      - variant: "ci_platform"
+        options:
+          - option: "github_actions"
+            path: "project_types/cli/ci/github_actions/setup.yaml"
+            version: "0.1.0"
+  
+  - id: "release"
+    title: "Release Process"
+    description: "Configure versioning, release workflow, and distribution channels"
+    dependencies: ["ci_setup"]
+    variants:
+      - variant: "language"
+        options:
+          - option: "go"
+            path: "project_types/cli/go/release.yaml"
+            version: "0.1.0"
+  
+  - id: "documentation"
+    title: "Documentation"
+    description: "Create comprehensive documentation for users and contributors"
+    dependencies: ["development"]
+    variants:
+      - variant: "language"
+        options:
+          - option: "go"
+            path: "project_types/cli/go/documentation.yaml"
+            version: "0.1.0"
+
+global_context:
+  prerequisites: [
+    "Go 1.16+ installed",
+    "Git installed",
+    "GitHub account with repository created"
+  ]
+  constraints: [
+    "Must follow idiomatic Go practices",
+    "Must be cross-platform compatible (Windows, macOS, Linux)",
+    "Should include proper error handling and logging"
+  ] 
