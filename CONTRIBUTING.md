@@ -68,21 +68,32 @@ The build script generates a versioned directory structure with appropriate syml
 
 To test your changes locally:
 
-1. **Install Dependencies**:
+1. **Set Up Python Environment**:
    ```bash
-   npm install
+   # Create a virtual environment (recommended)
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   
+   # Install dependencies
+   pip install -r requirements.txt
    ```
 
 2. **Run the Build**:
    ```bash
-   npm run build
+   python scripts/build_catalog.py
    ```
 
 3. **Check the Output**:
    The build output will be in the `./dist` directory. Verify that:
    - Your files appear in the correct locations
-   - Version directories are created correctly
-   - Latest symlinks point to the right versions
+   - The catalog.json file includes your changes
+   - The HTML index properly displays your instructions
+
+   For backward compatibility, you can also run:
+   ```bash
+   npm run build
+   ```
+   which calls the same Python script.
 
 ### Common Contribution Tasks
 

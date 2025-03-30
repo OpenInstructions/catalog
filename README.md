@@ -171,12 +171,15 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to add new instructi
    ```bash
    git clone https://github.com/OpenInstructions/catalog.git
    cd catalog
-   npm install
+   # Set up a Python virtual environment (recommended)
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
    ```
 
 2. **Build Locally**:
    ```bash
-   npm run build
+   python scripts/build_catalog.py
    ```
 
 3. **Test**:

@@ -3,17 +3,24 @@ dist/
 dist-new/
 migrated/
 
-# Dependencies
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-.pnpm-debug.log
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
+# Python-specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+.python-version
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Environment variables
 .env
@@ -50,13 +57,11 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# Coverage directory used by tools like istanbul
+# Coverage and test directories
 coverage/
-
-# Optional eslint cache
-.eslintcache
-
-# Package files
-package-lock.json
-yarn.lock
-# Keep package-lock.json if you're using npm 
+.coverage
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
