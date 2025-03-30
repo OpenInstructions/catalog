@@ -13,7 +13,7 @@ import logging
 from pathlib import Path
 import yaml
 from typing import Dict, List, Any, Optional
-from datetime import datetime, UTC  # Import UTC timezone
+from datetime import datetime, timezone  # Import timezone instead of UTC
 
 # Configure logging
 logging.basicConfig(
@@ -115,8 +115,8 @@ def build_catalog_index(yaml_files: List[str]) -> Dict:
         except Exception as e:
             log.error(f"Error processing {file_path}: {e}")
     
-    # Add timestamp - use datetime.now(UTC) instead of deprecated utcnow()
-    catalog["updated_at"] = datetime.now(UTC).isoformat()
+    # Add timestamp - use datetime.now(timezone.utc) instead of UTC
+    catalog["updated_at"] = datetime.now(timezone.utc).isoformat()
     
     return catalog
 
