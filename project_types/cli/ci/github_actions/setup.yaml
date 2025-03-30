@@ -1,0 +1,214 @@
+catalog_version: "0.1.0"
+version: "0.1.0"
+title: "GitHub Actions CI Setup for Go CLI"
+description: "Configure CI workflows for Go CLI applications using GitHub Actions"
+
+context:
+  instruction_type: "configuration"
+  applicable_to: "Go CLI projects with GitHub"
+  summary: "Set up GitHub Actions workflows for CI/CD and releases."
+  preconditions:
+    - "Go CLI project with tests implemented"
+    - "Project hosted on GitHub"
+  postconditions:
+    - "CI/CD workflows configured"
+    - "Automated testing implemented"
+    - "Release workflow configured"
+
+tasks:
+  - id: "setup_workflow_dir"
+    title: "Create workflows directory"
+    description: "Set up GitHub Actions directory structure"
+    steps:
+      - "Create directory: `mkdir -p .github/workflows`"
+    acceptance_criteria:
+      - "Workflow directory created"
+    
+  - id: "create_ci_workflow"
+    title: "Create CI workflow"
+    description: "Configure continuous integration"
+    steps:
+      - "Create `.github/workflows/ci.yaml`:"
+      - |
+        ```yaml
+        name: Continuous Integration
+
+        on:
+          push:
+            branches: [ main ]
+          pull_request:
+            branches: [ main ]
+
+        jobs:
+          lint:
+            name: Lint
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+              - uses: actions/setup-go@v5
+                with:
+                  go-version: '1.21'
+                  cache: true
+              - name: Install golangci-lint
+                run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+              - name: Run linter
+                run: golangci-lint run ./...
+
+          test:
+            name: Test
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+              - uses: actions/setup-go@v5
+                with:
+                  go-version: '1.21'
+                  cache: true
+              - run: go mod download
+              - run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
+              - uses: codecov/codecov-action@v4
+                with:
+                  file: ./coverage.out
+                env:
+                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+          build:
+            name: Build
+            needs: [lint, test]
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+              - uses: actions/setup-go@v5
+                with:
+                  go-version: '1.21'
+                  cache: true
+              - run: go mod download
+              - run: go build -v -o myapp ./cmd/myapp
+              - uses: actions/upload-artifact@v4
+                with:
+                  name: myapp-linux
+                  path: myapp
+        ```
+    acceptance_criteria:
+      - "CI workflow configured with lint, test and build jobs"
+    
+  - id: "create_cross_platform_workflow"
+    title: "Add cross-platform build"
+    description: "Configure builds for multiple platforms"
+    steps:
+      - "Create `.github/workflows/cross-platform.yaml`:"
+      - |
+        ```yaml
+        name: Cross-Platform Build
+
+        on:
+          workflow_dispatch:
+          push:
+            tags: ['v*']
+
+        jobs:
+          build:
+            name: Build for ${{ matrix.os }}
+            runs-on: ${{ matrix.os }}
+            strategy:
+              matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+                include:
+                  - os: ubuntu-latest
+                    output_name: myapp
+                    asset_name: myapp-linux-amd64
+                  - os: windows-latest
+                    output_name: myapp.exe
+                    asset_name: myapp-windows-amd64
+                  - os: macos-latest
+                    output_name: myapp
+                    asset_name: myapp-darwin-amd64
+            steps:
+              - uses: actions/checkout@v4
+              - uses: actions/setup-go@v5
+                with:
+                  go-version: '1.21'
+                  cache: true
+              - run: go mod download
+              - run: go build -v -o ${{ matrix.output_name }} ./cmd/myapp
+              - uses: actions/upload-artifact@v4
+                with:
+                  name: ${{ matrix.asset_name }}
+                  path: ${{ matrix.output_name }}
+        ```
+    acceptance_criteria:
+      - "Cross-platform build workflow configured"
+    
+  - id: "create_release_workflow"
+    title: "Create release workflow"
+    description: "Configure automated releases with GoReleaser"
+    steps:
+      - "Create `.github/workflows/release.yaml`:"
+      - |
+        ```yaml
+        name: Release
+
+        on:
+          push:
+            tags: ['v*']
+
+        permissions:
+          contents: write
+
+        jobs:
+          goreleaser:
+            name: Release with GoReleaser
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+                with:
+                  fetch-depth: 0
+              - uses: actions/setup-go@v5
+                with:
+                  go-version: '1.21'
+              - uses: goreleaser/goreleaser-action@v5
+                with:
+                  version: latest
+                  args: release --clean
+                env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ```
+      - "Create a basic `.goreleaser.yaml` in the project root"
+    acceptance_criteria:
+      - "Release workflow configured"
+      - "GoReleaser integration added"
+    
+  - id: "add_secrets"
+    title: "Configure repository secrets"
+    description: "Set up required GitHub secrets"
+    steps:
+      - "Go to repository Settings > Secrets and variables > Actions"
+      - "Add any required secrets (e.g., DOCKER_USERNAME, DOCKER_PASSWORD for container publishing)"
+    acceptance_criteria:
+      - "Required secrets configured"
+
+examples:
+  - title: "CI Workflow Example"
+    description: "Example CI workflow execution"
+    content: |
+      ```
+      workflow: Continuous Integration
+      
+      jobs:
+        lint ✓
+        test ✓ (Coverage: 85.6%)
+        build ✓
+      
+      Artifacts:
+        myapp-linux
+      ```
+
+  - title: "Release Example"
+    description: "Example GoReleaser output"
+    content: |
+      ```
+      • releasing...
+      • building binaries for 6 platforms
+      • creating archives
+      • publishing to GitHub Releases
+      • release succeeded after 1m23s
+      ``` 

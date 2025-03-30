@@ -1,0 +1,114 @@
+catalog_version: "0.1.0"
+version: "0.1.0"
+title: "Go CLI Testing"
+description: "Create tests for your Go CLI application"
+
+context:
+  instruction_type: "testing"
+  applicable_to: "Go CLI projects with Cobra"
+  summary: "Implement a comprehensive testing strategy for your CLI application."
+  preconditions:
+    - "Go CLI project with core functionality implemented"
+    - "Package-based architecture established"
+  postconditions:
+    - "Unit tests for core components"
+    - "Integration tests for commands"
+    - "Test coverage reporting"
+
+tasks:
+  - id: "setup_testing"
+    title: "Set up testing framework"
+    description: "Prepare the testing environment"
+    steps:
+      - "Install testify libraries (assert, require, mock)"
+      - "Create test directories for each package"
+    acceptance_criteria:
+      - "Testing libraries installed"
+      - "Test directory structure prepared"
+    
+  - id: "write_unit_tests"
+    title: "Create unit tests"
+    description: "Write unit tests for internal packages"
+    steps:
+      - "Write tests for config, logger, output, and error packages"
+      - "Use table-driven tests for scenarios with multiple test cases"
+      - "Consider TDD approach for new functionality"
+    acceptance_criteria:
+      - "Unit tests cover core functionality"
+      - "Tests verify error conditions"
+    
+  - id: "mock_dependencies"
+    title: "Implement dependency mocking"
+    description: "Mock external dependencies for reliable tests"
+    steps:
+      - "Create mocks for external services and APIs"
+      - "Inject mocks through dependency injection"
+    acceptance_criteria:
+      - "External dependencies properly mocked"
+      - "Tests do not depend on external services"
+    
+  - id: "write_command_tests"
+    title: "Create command tests"
+    description: "Test CLI commands functionality"
+    steps:
+      - "Create test helper for command execution"
+      - "Write table-driven tests for commands"
+      - "Test flag parsing, validation, and execution"
+    acceptance_criteria:
+      - "Command tests verify correct behavior"
+      - "Tests cover error conditions"
+    
+  - id: "setup_integration_tests"
+    title: "Create integration tests"
+    description: "Test commands in an integrated environment"
+    steps:
+      - "Create integration test directory"
+      - "Test multiple commands in sequence"
+      - "Test with different configurations"
+    acceptance_criteria:
+      - "Integration tests verify end-to-end functionality"
+    
+  - id: "implement_coverage"
+    title: "Set up test coverage"
+    description: "Configure test coverage reporting"
+    steps:
+      - "Create coverage script with minimum thresholds"
+      - "Add coverage target to Makefile"
+    acceptance_criteria:
+      - "Coverage reports generated"
+      - "Coverage meets defined thresholds"
+    
+  - id: "setup_static_analysis"
+    title: "Configure static analysis"
+    description: "Set up linting and static code analysis"
+    steps:
+      - "Add golangci-lint configuration"
+      - "Add lint target to Makefile"
+    acceptance_criteria:
+      - "Static analysis tools configured"
+      - "Linting integrated in development workflow"
+
+examples:
+  - title: "Table-Driven Test Pattern"
+    description: "Example showing how to structure tests for multiple scenarios"
+    content: |
+      ```go
+      func TestCommandFlags(t *testing.T) {
+        tests := []struct {
+          name     string
+          args     []string
+          expected string
+          wantErr  bool
+        }{
+          {"missing required flag", []string{"get"}, "", true},
+          {"valid command", []string{"get", "--resource", "user"}, "user", false},
+          {"invalid flag value", []string{"get", "--resource", ""}, "", true},
+        }
+        
+        for _, tt := range tests {
+          t.Run(tt.name, func(t *testing.T) {
+            // Test implementation...
+          })
+        }
+      }
+      ``` 

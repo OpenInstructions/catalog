@@ -1,0 +1,50 @@
+{
+  "version": "0.1.0",
+  "projects": {
+    "cli": [
+      {
+        "path": "project_types/cli/ci/github_actions/setup.yaml",
+        "title": "GitHub Actions CI Setup for Go CLI",
+        "description": "Configure CI workflows for Go CLI applications using GitHub Actions",
+        "version": "0.1.0",
+        "catalog_version": "0.1.0"
+      },
+      {
+        "path": "project_types/cli/go/release.yaml",
+        "title": "Go CLI Release Process",
+        "description": "Configure versioning and distribution for your Go CLI application",
+        "version": "0.1.0",
+        "catalog_version": "0.1.0"
+      },
+      {
+        "path": "project_types/cli/go/development.yaml",
+        "title": "Go CLI Development",
+        "description": "Implement core functionality for your Go CLI application",
+        "version": "0.1.0",
+        "catalog_version": "0.1.0"
+      },
+      {
+        "path": "project_types/cli/go/documentation.yaml",
+        "title": "Go CLI Documentation",
+        "description": "Create comprehensive documentation for your Go CLI application",
+        "version": "0.1.0",
+        "catalog_version": "0.1.0"
+      },
+      {
+        "path": "project_types/cli/go/setup.yaml",
+        "title": "Go CLI Project Setup",
+        "description": "Initialize a Go CLI project using the Cobra library",
+        "version": "0.1.0",
+        "catalog_version": "0.1.0"
+      },
+      {
+        "path": "project_types/cli/go/testing.yaml",
+        "title": "Go CLI Testing",
+        "description": "Create tests for your Go CLI application",
+        "version": "0.1.0",
+        "catalog_version": "0.1.0"
+      }
+    ]
+  },
+  "updated_at": "2025-03-30T22:40:46.514571+00:00"
+}
