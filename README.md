@@ -185,11 +185,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to add new instructi
 3. **Test**:
    The build output will be in the `./dist` directory.
 
-## Roadmap
-- Launch full v0.1.0 release after beta feedback (Q3 2023)
-- Add more project types and variant options (Q4 2023)
-- CLI tool with AI integration (Q1 2024)
-
 ## License
 
 This project is licensed under the terms of the MIT license.
