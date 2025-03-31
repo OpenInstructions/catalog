@@ -28,6 +28,139 @@ DIST_DIR = "dist"
 SCHEMA_DIR = "schemas"
 PROJECT_TYPES_DIR = "project_types"
 
+def get_shared_footer():
+    """Return the shared footer HTML to be used across all pages."""
+    return """    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>OpenInstructions</h3>
+                    <p>An open-source initiative for structured, versioned instructions optimized for Large Language Models and developers.</p>
+                    <p>The 'OpenInstructions' name and branding are reserved for this project and its officially authorized derivatives.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/OpenInstructions/catalog"><i class="fa-solid fa-chevron-right"></i> GitHub Repository</a></li>
+                        <li><a href="https://github.com/OpenInstructions/catalog/blob/main/CONTRIBUTING.md"><i class="fa-solid fa-chevron-right"></i> Contributing Guide</a></li>
+                        <li><a href="https://github.com/OpenInstructions/catalog/blob/main/SPEC.md"><i class="fa-solid fa-chevron-right"></i> Specification</a></li>
+                        <li><a href="https://github.com/OpenInstructions/catalog/blob/main/LICENSE"><i class="fa-solid fa-chevron-right"></i> License</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Project</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#features"><i class="fa-solid fa-chevron-right"></i> Features</a></li>
+                        <li><a href="index.html#getting-started"><i class="fa-solid fa-chevron-right"></i> Getting Started</a></li>
+                        <li><a href="index.html#catalog"><i class="fa-solid fa-chevron-right"></i> Catalog</a></li>
+                        <li><a href="index.html#community"><i class="fa-solid fa-chevron-right"></i> Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OpenInstructions. MIT License.</p>
+            </div>
+        </div>
+    </footer>"""
+
+def get_shared_footer_css():
+    """Return the shared footer CSS to be used across all pages."""
+    return """
+        /* Footer */
+        footer {{
+            background-color: #2b2d42;
+            color: white;
+            padding: 5rem 0 1rem;
+            position: relative;
+        }}
+        
+        footer::before {{
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: #2b2d42;
+            clip-path: ellipse(75% 50% at 50% 0%);
+            z-index: -1;
+        }}
+        
+        .footer-content {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }}
+        
+        .footer-col {{
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .footer-col h3 {{
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+            color: white;
+        }}
+        
+        .footer-col h3:after {{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }}
+        
+        .footer-col p {{
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }}
+        
+        .footer-links {{
+            list-style: none;
+            padding-left: 0;
+        }}
+        
+        .footer-links li {{
+            margin-bottom: 0.75rem;
+        }}
+        
+        .footer-links a {{
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s, padding-left 0.2s;
+            display: flex;
+            align-items: center;
+        }}
+        
+        .footer-links a:hover {{
+            color: white;
+            padding-left: 5px;
+            text-decoration: none;
+        }}
+        
+        .footer-links a i {{
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--primary-light);
+        }}
+        
+        .footer-bottom {{
+            margin-top: 2rem;
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+        }}
+    """
+
 def setup_output_directory() -> None:
     """Create or clean the output directory."""
     if os.path.exists(DIST_DIR):
@@ -167,9 +300,6 @@ def main() -> int:
     
     # Generate a comprehensive HTML landing page for the OpenInstructions project
     generate_html_index(catalog)
-    
-    # Generate the specification page
-    generate_specification_page()
     
     log.info("Catalog build completed successfully")
     return 0
@@ -462,6 +592,7 @@ def generate_html_index(catalog: Dict) -> None:
             height: 100px;
             background: var(--light-bg-color);
             clip-path: ellipse(75% 50% at 50% 100%);
+            z-index: -1;
         }}
         
         .section-title {{
@@ -660,6 +791,7 @@ def generate_html_index(catalog: Dict) -> None:
             height: 100px;
             background: white;
             clip-path: ellipse(75% 50% at 50% 100%);
+            z-index: -1;
         }}
         
         .catalog-version {{
@@ -803,6 +935,7 @@ def generate_html_index(catalog: Dict) -> None:
             height: 100px;
             background: var(--light-bg-color);
             clip-path: ellipse(75% 50% at 50% 100%);
+            z-index: -1;
         }}
         
         .community-desc {{
@@ -869,6 +1002,253 @@ def generate_html_index(catalog: Dict) -> None:
             line-height: 1.7;
         }}
         
+        /* Specification Section */
+        .specification {{
+            padding: 6rem 0;
+            background-color: var(--light-bg-color);
+            position: relative;
+        }}
+        
+        .specification::before {{
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: white;
+            clip-path: ellipse(75% 50% at 50% 100%);
+            z-index: -1;
+        }}
+        
+        .spec-container {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }}
+        
+        .spec-card {{
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+        }}
+        
+        .spec-card:hover {{
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }}
+        
+        .spec-header {{
+            margin-bottom: 1.5rem;
+        }}
+        
+        .spec-header h3 {{
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }}
+        
+        .spec-header h3 i {{
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }}
+        
+        .spec-header p {{
+            margin-bottom: 0;
+            color: var(--text-light);
+        }}
+        
+        .spec-card p {{
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }}
+        
+        .spec-card-full {{
+            grid-column: span 2;
+        }}
+        
+        /* Schema Table Styles */
+        .schema-table-container {{
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }}
+        
+        .schema-table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }}
+        
+        .schema-table th {{
+            background-color: var(--text-color);
+            color: white;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+        }}
+        
+        .schema-table th:first-child {{
+            border-top-left-radius: 6px;
+        }}
+        
+        .schema-table th:last-child {{
+            border-top-right-radius: 6px;
+        }}
+        
+        .schema-table td {{
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }}
+        
+        .schema-table td code {{
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            background-color: rgba(0,0,0,0.03);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--primary-color);
+        }}
+        
+        .schema-table tr:nth-child(even) {{
+            background-color: rgba(0,0,0,0.02);
+        }}
+        
+        .schema-table tr:hover {{
+            background-color: rgba(67, 97, 238, 0.05);
+        }}
+        
+        .required {{
+            display: inline-block;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }}
+        
+        .optional {{
+            display: inline-block;
+            background-color: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }}
+        
+        .code-example {{
+            background-color: var(--text-color);
+            color: #f8f8f2;
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            font-size: 0.9rem;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-top: 1rem;
+        }}
+        
+        .spec-info {{
+            grid-column: span 2;
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            margin-top: 1rem;
+        }}
+        
+        .spec-info-container {{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }}
+        
+        .spec-info-card {{
+            background-color: var(--light-bg-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }}
+        
+        .spec-info-card h3 {{
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }}
+        
+        .spec-info-card h3 i {{
+            margin-right: 0.75rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }}
+        
+        .spec-info h3 {{
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            padding-bottom: 0.5rem;
+        }}
+        
+        .spec-info ul {{
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            padding-left: 1.25rem;
+        }}
+        
+        .spec-info li {{
+            margin-bottom: 0.75rem;
+        }}
+        
+        .spec-cta {{
+            margin-top: 2rem;
+            text-align: center;
+        }}
+        
+        @media (max-width: 768px) {{
+            .spec-container {{
+                grid-template-columns: 1fr;
+            }}
+            
+            .spec-card-full {{
+                grid-column: span 1;
+            }}
+            
+            .spec-info {{
+                grid-column: span 1;
+            }}
+            
+            .spec-info-container {{
+                grid-template-columns: 1fr;
+            }}
+            
+            .nav-links {{
+                display: none;
+            }}
+            
+            .page-header h1 {{
+                font-size: 2rem;
+            }}
+            
+            .footer-content {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+        
         /* Footer */
         footer {{
             background-color: #2b2d42;
@@ -926,6 +1306,7 @@ def generate_html_index(catalog: Dict) -> None:
         
         .footer-links {{
             list-style: none;
+            padding-left: 0;
         }}
         
         .footer-links li {{
@@ -943,6 +1324,7 @@ def generate_html_index(catalog: Dict) -> None:
         .footer-links a:hover {{
             color: white;
             padding-left: 5px;
+            text-decoration: none;
         }}
         
         .footer-links a i {{
@@ -959,41 +1341,6 @@ def generate_html_index(catalog: Dict) -> None:
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
         }}
-        
-        @media (max-width: 768px) {{
-            .hero h1 {{
-                font-size: 2.5rem;
-            }}
-            
-            .hero p {{
-                font-size: 1rem;
-            }}
-            
-            .nav-links {{
-                display: none;
-            }}
-            
-            .features-grid {{
-                grid-template-columns: 1fr;
-            }}
-            
-            .instruction-cards {{
-                grid-template-columns: 1fr;
-            }}
-            
-            .hero-buttons {{
-                flex-direction: column;
-                gap: 1rem;
-            }}
-            
-            .step {{
-                padding-left: 3rem;
-            }}
-            
-            .footer-content {{
-                grid-template-columns: 1fr;
-            }}
-        }}
     </style>
 </head>
 <body>
@@ -1009,7 +1356,7 @@ def generate_html_index(catalog: Dict) -> None:
                     <li><a href="#features">Features</a></li>
                     <li><a href="#getting-started">Getting Started</a></li>
                     <li><a href="#catalog">Catalog</a></li>
-                    <li><a href="specification.html">Specification</a></li>
+                    <li><a href="#specification">Specification</a></li>
                     <li><a href="#community">Community</a></li>
                     <li>
                         <a href="https://github.com/OpenInstructions/catalog" class="github-link" target="_blank">
@@ -1100,14 +1447,14 @@ def generate_html_index(catalog: Dict) -> None:
                 <div class="step">
                     <h3>Browse the instructions</h3>
                     <p>Check out our catalog of instructions for various project types:</p>
-                    <p><a href="https://openinstructions.org/catalog/v1/schemas/web_app.yaml">Web Application Schema</a> - Complete web app lifecycle</p>
+                    <p><a href="project_types/cli/go/setup.yaml">Go CLI Setup</a> - Initialize a new Go CLI project</p>
                 </div>
                 <div class="step">
                     <h3>Access via direct URLs</h3>
                     <p>You can access instructions via various patterns:</p>
                     <ul>
-                        <li>Latest: <code>https://openinstructions.org/catalog/latest/...</code></li>
-                        <li>Specific version: <code>https://openinstructions.org/catalog/v1/project_types/web_app/react/v0.1.0/setup.yaml</code></li>
+                        <li>Latest: <code>https://openinstructions.org/catalog/latest/project_types/cli/go/setup.yaml</code></li>
+                        <li>Specific version: <code>https://openinstructions.org/catalog/v1/project_types/cli/go/setup.yaml</code></li>
                     </ul>
                 </div>
                 <div class="step">
@@ -1116,15 +1463,15 @@ def generate_html_index(catalog: Dict) -> None:
                     <pre>import yaml
 import requests
 
-# Access the latest schema
-schema_url = "https://openinstructions.org/catalog/latest/schemas/web_app.yaml"
-schema = yaml.safe_load(requests.get(schema_url).text)
+# Access the CLI setup instructions
+setup_url = "https://openinstructions.org/catalog/latest/project_types/cli/go/setup.yaml"
+setup = yaml.safe_load(requests.get(setup_url).text)
 
-# Determine variants for your project
-frontend_framework = "react"  # or "vue", "angular"
-ci_platform = "github_actions"  # or "gitlab_ci"
+# Access CI/CD instructions
+ci_url = "https://openinstructions.org/catalog/latest/project_types/cli/ci/github_actions/setup.yaml"
+ci = yaml.safe_load(requests.get(ci_url).text)
 
-# Process the instruction...
+# Process the instructions...
                     </pre>
                 </div>
             </div>
@@ -1212,694 +1559,274 @@ ci_platform = "github_actions"  # or "gitlab_ci"
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <!-- Specification Section -->
+    <section class="specification" id="specification">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h3>OpenInstructions</h3>
-                    <p>An open-source initiative for structured, versioned instructions optimized for Large Language Models and developers.</p>
-                    <p>The 'OpenInstructions' name and branding are reserved for this project and its officially authorized derivatives.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/OpenInstructions/catalog"><i class="fa-solid fa-chevron-right"></i> GitHub Repository</a></li>
-                        <li><a href="https://github.com/OpenInstructions/catalog/blob/main/CONTRIBUTING.md"><i class="fa-solid fa-chevron-right"></i> Contributing Guide</a></li>
-                        <li><a href="https://github.com/OpenInstructions/catalog/blob/main/SPEC.md"><i class="fa-solid fa-chevron-right"></i> Specification</a></li>
-                        <li><a href="https://github.com/OpenInstructions/catalog/blob/main/LICENSE"><i class="fa-solid fa-chevron-right"></i> License</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Project</h3>
-                    <ul class="footer-links">
-                        <li><a href="#features"><i class="fa-solid fa-chevron-right"></i> Features</a></li>
-                        <li><a href="#getting-started"><i class="fa-solid fa-chevron-right"></i> Getting Started</a></li>
-                        <li><a href="#catalog"><i class="fa-solid fa-chevron-right"></i> Catalog</a></li>
-                        <li><a href="#community"><i class="fa-solid fa-chevron-right"></i> Community</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 OpenInstructions. MIT License.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
-"""
-    
-    with open(os.path.join(DIST_DIR, "index.html"), 'w', encoding='utf-8') as f:
-        f.write(html)
-    
-    log.info("Generated comprehensive HTML landing page")
-
-def generate_specification_page() -> None:
-    """Generate a specification page for the OpenInstructions project."""
-    html = """<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenInstructions - Specification</title>
-    <meta name="description" content="Technical specification for the OpenInstructions catalog format and structure.">
-    <meta property="og:title" content="OpenInstructions - Specification">
-    <meta property="og:description" content="Technical specification for the OpenInstructions catalog format and structure">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://openinstructions.org/specification">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <style>
-        :root {
-            --primary-color: #4361ee;
-            --primary-light: #4895ef;
-            --secondary-color: #7209b7;
-            --secondary-light: #9d4edd;
-            --accent-color: #f72585;
-            --text-color: #2b2d42;
-            --text-light: #6c757d;
-            --background-color: #fff;
-            --light-bg-color: #f8f9fa;
-            --card-bg-color: #ffffff;
-            --border-color: #e9ecef;
-            --header-height: 70px;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
-            --border-radius: 8px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.3;
-        }
-        
-        p {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-        
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.2s, transform 0.2s;
-        }
-        
-        a:hover {
-            color: var(--primary-light);
-        }
-        
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--header-height);
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            text-decoration: none;
-            height: 100%;
-        }
-        
-        .logo i {
-            font-size: 1.75rem;
-            margin-right: 0.75rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .logo span {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            height: 100%;
-            align-items: center;
-        }
-        
-        .nav-links li {
-            margin-left: 2rem;
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.2s;
-            position: relative;
-            padding-bottom: 5px;
-        }
-        
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-        
-        .nav-links a.github-link:after {
-            display: none;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .github-link {
-            display: flex;
-            align-items: center;
-            background-color: var(--primary-color);
-            color: white !important;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .github-link:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .github-link i {
-            margin-right: 0.5rem;
-        }
-        
-        /* Main Content */
-        .main-content {
-            padding: 0 0 5rem;
-        }
-        
-        .page-header {
-            padding: 3rem 0;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-top: calc(var(--header-height) * -1);
-            padding-top: calc(var(--header-height) + 5rem);
-        }
-        
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" width="100" height="100"/><rect fill-opacity="0.05" x="25" y="25" width="50" height="50" transform="rotate(45 50 50)"/></svg>');
-            background-size: 30px 30px;
-            opacity: 0.3;
-        }
-        
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .page-header p {
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto;
-            color: rgba(255, 255, 255, 0.85);
-        }
-        
-        .spec-section {
-            margin-bottom: 4rem;
-        }
-        
-        .spec-section h2 {
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--primary-light);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-        
-        .spec-section h3 {
-            font-size: 1.35rem;
-            margin: 1.5rem 0 1rem;
-            color: var(--text-color);
-        }
-        
-        .spec-card {
-            background-color: var(--card-bg-color);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-        }
-        
-        pre.code-example {
-            background-color: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            overflow-x: auto;
-            font-family: "Menlo", "Monaco", "Courier New", monospace;
-            font-size: 0.9rem;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border-color);
-        }
-        
-        .schema-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        
-        .schema-table th,
-        .schema-table td {
-            padding: 0.75rem 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .schema-table th {
-            background-color: var(--light-bg-color);
-            font-weight: 600;
-        }
-        
-        .schema-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .type-tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            background-color: rgba(67, 97, 238, 0.1);
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-        
-        .required-tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--accent-color);
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #2b2d42;
-            color: white;
-            padding: 5rem 0 1rem;
-            position: relative;
-        }
-        
-        footer::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: #2b2d42;
-            clip-path: ellipse(75% 50% at 50% 0%);
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-        
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .footer-col h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-            color: white;
-        }
-        
-        .footer-col h3:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-        }
-        
-        .footer-col p {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.2s, padding-left 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-            padding-left: 5px;
-        }
-        
-        .footer-links a i {
-            margin-right: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--primary-light);
-        }
-        
-        .footer-bottom {
-            margin-top: 2rem;
-            text-align: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.8rem;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
+            <h2 class="section-title">Schema Specification</h2>
+            <p class="section-subtitle">OpenInstructions uses two primary schema types to define structured instruction sets</p>
             
-            .page-header h1 {
-                font-size: 2rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="index.html" class="logo">
-                    <i class="fa-solid fa-clipboard-list"></i>
-                    <span>OpenInstructions</span>
-                </a>
-                <ul class="nav-links">
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#getting-started">Getting Started</a></li>
-                    <li><a href="index.html#catalog">Catalog</a></li>
-                    <li><a href="specification.html" class="active">Specification</a></li>
-                    <li><a href="index.html#community">Community</a></li>
-                    <li>
-                        <a href="https://github.com/OpenInstructions/catalog" class="github-link" target="_blank">
-                            <i class="fa-brands fa-github"></i>
-                            GitHub
+            <div class="spec-container">
+                <div class="spec-card spec-card-full">
+                    <div class="spec-header">
+                        <h3><i class="fa-solid fa-sitemap"></i> Project Type Root Schema</h3>
+                        <p>Defines the structure of a project type with its supported variants and lifecycle phases</p>
+                    </div>
+                    <div class="schema-table-container">
+                        <table class="schema-table">
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>catalog_version</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Version of the catalog specification (e.g., "0.1.0")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>project_type</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Project type identifier (e.g., "web_app")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>title</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Human-readable name of the project type</td>
+                                </tr>
+                                <tr>
+                                    <td><code>description</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Description of the project type's purpose</td>
+                                </tr>
+                                <tr>
+                                    <td><code>variants</code></td>
+                                    <td>array</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>List of variant dimensions available for this project type</td>
+                                </tr>
+                                <tr>
+                                    <td><code>variants[].id</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Variant identifier (e.g., "language", "framework")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>variants[].title</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Human-readable name for this variant dimension</td>
+                                </tr>
+                                <tr>
+                                    <td><code>variants[].options</code></td>
+                                    <td>array</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Available options for this variant</td>
+                                </tr>
+                                <tr>
+                                    <td><code>phases</code></td>
+                                    <td>array</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Lifecycle phases in recommended sequence</td>
+                                </tr>
+                                <tr>
+                                    <td><code>phases[].id</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Phase identifier (e.g., "setup", "development")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>phases[].title</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Human-readable phase name</td>
+                                </tr>
+                                <tr>
+                                    <td><code>phases[].dependencies</code></td>
+                                    <td>array</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Phases that must be completed first</td>
+                                </tr>
+                                <tr>
+                                    <td><code>phases[].required</code></td>
+                                    <td>boolean</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Whether phase is mandatory (default: true)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>global_context</code></td>
+                                    <td>object</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Project-wide context information</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="spec-card spec-card-full">
+                    <div class="spec-header">
+                        <h3><i class="fa-solid fa-list-check"></i> Phase Instruction Schema</h3>
+                        <p>Defines the detailed implementation instructions for a specific phase</p>
+                    </div>
+                    <div class="schema-table-container">
+                        <table class="schema-table">
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>instruction_id</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Unique identifier for this instruction</td>
+                                </tr>
+                                <tr>
+                                    <td><code>title</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Concise title of the instruction set</td>
+                                </tr>
+                                <tr>
+                                    <td><code>version</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Version of this instruction (e.g., "0.1.0")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>catalog_version</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Version of the catalog specification</td>
+                                </tr>
+                                <tr>
+                                    <td><code>project_type</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Must match parent project_type</td>
+                                </tr>
+                                <tr>
+                                    <td><code>phase</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Must match phase.id from root schema</td>
+                                </tr>
+                                <tr>
+                                    <td><code>variant_option</code></td>
+                                    <td>string</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Variant this instruction implements (e.g., "react")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>context</code></td>
+                                    <td>object</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Information about the "why" of these instructions</td>
+                                </tr>
+                                <tr>
+                                    <td><code>context.objective</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Overall goal of this phase</td>
+                                </tr>
+                                <tr>
+                                    <td><code>context.preconditions</code></td>
+                                    <td>array</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Conditions that must be true before starting</td>
+                                </tr>
+                                <tr>
+                                    <td><code>context.postconditions</code></td>
+                                    <td>array</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Conditions that must be true after completion</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tasks</code></td>
+                                    <td>array</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>List of implementation tasks</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tasks[].id</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Task identifier (e.g., "task1")</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tasks[].title</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Short description of the task</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tasks[].description</code></td>
+                                    <td>string</td>
+                                    <td><span class="required">Required</span></td>
+                                    <td>Detailed explanation of the task</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tasks[].priority</code></td>
+                                    <td>integer</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Priority level (1-5, where 1 is highest)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>tasks[].dependencies</code></td>
+                                    <td>array</td>
+                                    <td><span class="optional">Optional</span></td>
+                                    <td>Tasks that must be completed before this one</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="spec-info">
+                    <div class="spec-info-container">
+                        <div class="spec-info-card">
+                            <h3><i class="fa-solid fa-diagram-project"></i> Structure Overview</h3>
+                            <ul>
+                                <li><strong>Project Types</strong> → Define categories</li>
+                                <li><strong>Variants</strong> → Implementation options</li>
+                                <li><strong>Phases</strong> → Sequential lifecycle stages</li>
+                                <li><strong>Tasks</strong> → Specific activities</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="spec-info-card">
+                            <h3><i class="fa-solid fa-gears"></i> Key Benefits</h3>
+                            <ul>
+                                <li><strong>Modularity</strong> — Mix and match variants</li>
+                                <li><strong>Dependencies</strong> — Clear prerequisites</li>
+                                <li><strong>Structured Format</strong> — LLM-optimized</li>
+                                <li><strong>Versioning</strong> — Track changes over time</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-cta">
+                        <a href="https://github.com/OpenInstructions/catalog/blob/main/SPEC.md" class="btn btn-primary" target="_blank">
+                            <i class="fa-solid fa-file-code"></i>
+                            View Complete Specification
                         </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="container">
-            <h1>OpenInstructions Specification</h1>
-            <p>Technical documentation for the OpenInstructions catalog format and structure</p>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <div class="spec-section">
-                <h2>Introduction</h2>
-                <p>The OpenInstructions catalog is a structured collection of phase-based instructions for Large Language Models (LLMs) to create and refactor development projects. This specification defines the format and structure of the catalog, ensuring consistency and interoperability.</p>
-                
-                <div class="spec-card">
-                    <h3>Key Concepts</h3>
-                    <p>The catalog is organized around these key concepts:</p>
-                    <ul>
-                        <li><strong>Catalog</strong>: The overall collection of instructions</li>
-                        <li><strong>Project Types</strong>: Categories of projects (e.g., web_app, cli)</li>
-                        <li><strong>Phases</strong>: Sequential steps in project development (e.g., setup, development)</li>
-                        <li><strong>Variants</strong>: Different implementation options (e.g., frontend frameworks, CI platforms)</li>
-                        <li><strong>Instructions</strong>: The actual guidance provided for each phase and variant</li>
-                    </ul>
+                    </div>
                 </div>
             </div>
-
-            <div class="spec-section">
-                <h2>File Format</h2>
-                <p>All OpenInstructions files are stored in YAML format. Each file must include version information and follow a consistent structure.</p>
-                
-                <h3>Schema File</h3>
-                <pre class="code-example">catalog_version: "0.1.0"
-title: "Web Application Instructions"
-description: "Instructions for creating web applications"
-phases:
-  - id: "setup"
-    title: "Project Setup"
-    description: "Initialize the project structure and dependencies"
-    variants:
-      - variant: "frontend_framework"
-        options:
-          - option: "react"
-            path: "project_types/web_app/react/setup.yaml"
-            version: "0.1.0"
-          - option: "vue"
-            path: "project_types/web_app/vue/setup.yaml"
-            version: "0.1.0"
-  - id: "development"
-    title: "Development"
-    description: "Implement core functionality"
-    variants:
-      - variant: "frontend_framework"
-        options:
-          - option: "react"
-            path: "project_types/web_app/react/development.yaml"
-            version: "0.1.0"</pre>
-            </div>
-
-            <div class="spec-section">
-                <h2>Schema Definition</h2>
-                
-                <h3>Catalog Schema</h3>
-                <table class="schema-table">
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>catalog_version <span class="required-tag">Required</span></td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Version of the catalog format</td>
-                        </tr>
-                        <tr>
-                            <td>title <span class="required-tag">Required</span></td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Human-readable title for the schema</td>
-                        </tr>
-                        <tr>
-                            <td>description</td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Description of the schema</td>
-                        </tr>
-                        <tr>
-                            <td>phases <span class="required-tag">Required</span></td>
-                            <td><span class="type-tag">Array</span></td>
-                            <td>Array of phase objects</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h3>Phase Schema</h3>
-                <table class="schema-table">
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>id <span class="required-tag">Required</span></td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Unique identifier for the phase</td>
-                        </tr>
-                        <tr>
-                            <td>title <span class="required-tag">Required</span></td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Human-readable title for the phase</td>
-                        </tr>
-                        <tr>
-                            <td>description</td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Description of the phase</td>
-                        </tr>
-                        <tr>
-                            <td>variants</td>
-                            <td><span class="type-tag">Array</span></td>
-                            <td>Array of variant objects</td>
-                        </tr>
-                        <tr>
-                            <td>path</td>
-                            <td><span class="type-tag">String</span></td>
-                            <td>Path to the instruction file (if not variant-specific)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="spec-section">
-                <h2>Directory Structure</h2>
-                <p>The repository uses a flat structure with version information embedded in the files:</p>
-                <pre class="code-example"># Source repository
-schemas/
-└── web_app.yaml                 # Contains catalog_version: "0.1.0"
-project_types/
-├── web_app/
-│   ├── react/
-│   │   ├── setup.yaml           # Contains version: "0.1.0"
-│   │   └── development.yaml     # Contains version: "0.1.0"
-│   └── ci/
-│       ├── javascript/
-│       │   ├── github_actions.yaml  # Contains version: "0.1.0"
-│       │   └── gitlab_ci.yaml       # Contains version: "0.1.0"</pre>
-
-                <p>After building, the directory structure includes versioning:</p>
-                <pre class="code-example"># Generated structure (after build)
-catalog/
-├── latest/ -> v1/              # Symlink to latest catalog version
-├── v1/                         # Catalog version 1.x
-│   ├── schemas/
-│   │   └── web_app.yaml        # Root schema with variants and phases
-│   ├── project_types/
-│   │   ├── web_app/
-│   │   │   ├── react/
-│   │   │   │   ├── latest/ -> v0.1.0/  # Symlink to latest version
-│   │   │   │   └── v0.1.0/             # Instruction version
-│   │   │   │       └── setup.yaml</pre>
-            </div>
-
-            <div class="spec-section">
-                <h2>Versioning</h2>
-                <p>The catalog uses semantic versioning with two distinct versioning systems:</p>
-                
-                <div class="spec-card">
-                    <h3>Catalog Versioning</h3>
-                    <p>The <code>catalog_version</code> field indicates the overall catalog format version:</p>
-                    <ul>
-                        <li><strong>Major version</strong>: Incompatible changes to the catalog structure</li>
-                        <li><strong>Minor version</strong>: Backwards-compatible additions</li>
-                        <li><strong>Patch version</strong>: Backwards-compatible bug fixes</li>
-                    </ul>
-                </div>
-                
-                <div class="spec-card">
-                    <h3>Instruction Versioning</h3>
-                    <p>The <code>version</code> field in individual instruction files indicates the version of that specific instruction:</p>
-                    <ul>
-                        <li><strong>Major version</strong>: Breaking changes to the instruction</li>
-                        <li><strong>Minor version</strong>: New features or significant improvements</li>
-                        <li><strong>Patch version</strong>: Bug fixes or minor clarifications</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="spec-section">
-                <h2>Access Patterns</h2>
-                <p>Instructions can be accessed through multiple URL patterns:</p>
-                <ul>
-                    <li><strong>Latest catalog</strong>: <code>https://openinstructions.org/catalog/latest/...</code></li>
-                    <li><strong>Latest instruction</strong>: <code>https://openinstructions.org/catalog/v1/project_types/web_app/react/latest/setup.yaml</code></li>
-                    <li><strong>Specific version</strong>: <code>https://openinstructions.org/catalog/v1/project_types/web_app/react/v0.1.0/setup.yaml</code></li>
-                    <li><strong>Git tag</strong>: <code>https://raw.githubusercontent.com/OpenInstructions/catalog/v0.1.0/project_types/web_app/react/setup.yaml</code></li>
-                </ul>
-            </div>
         </div>
-    </main>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -1930,17 +1857,18 @@ catalog/
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Ilia Lirtsman and Gosha Dozoretz. MIT License.</p>
+                <p>&copy; 2025 OpenInstructions. MIT License.</p>
             </div>
         </div>
     </footer>
 </body>
-</html>"""
+</html>
+"""
     
-    with open(os.path.join(DIST_DIR, "specification.html"), 'w', encoding='utf-8') as f:
+    with open(os.path.join(DIST_DIR, "index.html"), 'w', encoding='utf-8') as f:
         f.write(html)
     
-    log.info("Generated specification page")
+    log.info("Generated comprehensive HTML landing page")
 
 if __name__ == "__main__":
     sys.exit(main()) 
