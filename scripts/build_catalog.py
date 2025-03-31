@@ -237,6 +237,7 @@ def generate_html_index(catalog: Dict) -> None:
         
         p {{
             color: var(--text-light);
+            margin-bottom: 1.5rem;
         }}
         
         a {{
@@ -271,32 +272,29 @@ def generate_html_index(catalog: Dict) -> None:
             justify-content: space-between;
             align-items: center;
             height: 100%;
-            width: 100%;
         }}
         
         .logo {{
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
             display: flex;
             align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
             height: 100%;
         }}
         
         .logo i {{
-            font-size: 1.8rem;
-            margin-right: 0.5rem;
+            font-size: 1.75rem;
+            margin-right: 0.75rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }}
         
         .logo span {{
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }}
         
@@ -875,7 +873,7 @@ def generate_html_index(catalog: Dict) -> None:
         footer {{
             background-color: #2b2d42;
             color: white;
-            padding: 5rem 0 2rem;
+            padding: 5rem 0 1rem;
             position: relative;
         }}
         
@@ -888,6 +886,7 @@ def generate_html_index(catalog: Dict) -> None:
             height: 100px;
             background: #2b2d42;
             clip-path: ellipse(75% 50% at 50% 0%);
+            z-index: -1;
         }}
         
         .footer-content {{
@@ -953,12 +952,12 @@ def generate_html_index(catalog: Dict) -> None:
         }}
         
         .footer-bottom {{
-            margin-top: 4rem;
+            margin-top: 2rem;
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }}
         
         @media (max-width: 768px) {{
@@ -1353,32 +1352,29 @@ def generate_specification_page() -> None:
             justify-content: space-between;
             align-items: center;
             height: 100%;
-            width: 100%;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
             display: flex;
             align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
             height: 100%;
         }
         
         .logo i {
-            font-size: 1.8rem;
-            margin-right: 0.5rem;
+            font-size: 1.75rem;
+            margin-right: 0.75rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .logo span {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -1450,7 +1446,7 @@ def generate_specification_page() -> None:
         
         /* Main Content */
         .main-content {
-            padding: calc(var(--header-height) + 2rem) 0 5rem;
+            padding: 0 0 5rem;
         }
         
         .page-header {
@@ -1461,6 +1457,8 @@ def generate_specification_page() -> None:
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-top: calc(var(--header-height) * -1);
+            padding-top: calc(var(--header-height) + 5rem);
         }
         
         .page-header::before {
@@ -1572,7 +1570,7 @@ def generate_specification_page() -> None:
         footer {
             background-color: #2b2d42;
             color: white;
-            padding: 5rem 0 2rem;
+            padding: 5rem 0 1rem;
             position: relative;
         }
         
@@ -1650,12 +1648,12 @@ def generate_specification_page() -> None:
         }
         
         .footer-bottom {
-            margin-top: 4rem;
+            margin-top: 2rem;
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         @media (max-width: 768px) {
