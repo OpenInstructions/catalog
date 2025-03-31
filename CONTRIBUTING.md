@@ -2,6 +2,10 @@
 
 Thank you for your interest in contributing! This guide will help you understand how to add or improve instructions in the catalog.
 
+## License and Branding
+
+While the codebase is MIT-licensed, please note that the 'OpenInstructions' name and branding are reserved for this project and its official derivatives. Unauthorized use of this name for other projects is not permitted.
+
 ## Quick Start
 
 1. **Fork**: Start by forking `https://github.com/OpenInstructions/catalog`
@@ -14,7 +18,7 @@ Thank you for your interest in contributing! This guide will help you understand
 
 ### General Requirements
 
-- Follow the format defined in `SPEC.md`
+- Follow the format defined in [SPEC.md](./SPEC.md)
 - Include the required version fields:
   - `catalog_version`: Version of the catalog (e.g., "0.1.0")
   - `version`: Version of your specific instruction (e.g., "0.1.0")

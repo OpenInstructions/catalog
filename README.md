@@ -2,6 +2,10 @@
 
 Welcome to the **OpenInstructions Catalog**, a public collection of phase-based instructions for Large Language Models (LLMs) and developers to create and refactor development projects. Hosted as raw YAML files on GitHub, this catalog powers project initialization and refactoring, with a CLI tool that integrates with OpenRouter to execute instructions.
 
+## Project Attribution and Name Protection
+
+**OpenInstructions** is an open-source initiative by Ilia Lirtsman and Gosha Dozoretz. The 'OpenInstructions' name and branding are reserved for this project and its officially authorized derivatives. Unauthorized use of the name for other projects or purposes is not permitted without explicit permission from the founders.
+
 ## Features
 
 - **Structured**: Clearly defined phases with dependency tracking
@@ -187,9 +191,9 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to add new instructi
 
 ## License
 
-This project is licensed under the terms of the MIT license.
+This project is licensed under the terms of the MIT license. While the code is MIT-licensed, the 'OpenInstructions' name and branding are reserved for this project.
 
-## Get Involved
+## Get Involved:
 - Star this repo
 - Join [Discussions](https://github.com/OpenInstructions/catalog/discussions)
 - Open issues for features or bugs
