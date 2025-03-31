@@ -94,32 +94,29 @@
             justify-content: space-between;
             align-items: center;
             height: 100%;
-            width: 100%;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
             display: flex;
             align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
             height: 100%;
         }
         
         .logo i {
-            font-size: 1.8rem;
-            margin-right: 0.5rem;
+            font-size: 1.75rem;
+            margin-right: 0.75rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .logo span {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -191,7 +188,7 @@
         
         /* Main Content */
         .main-content {
-            padding: calc(var(--header-height) + 2rem) 0 5rem;
+            padding: 0 0 5rem;
         }
         
         .page-header {
@@ -202,6 +199,8 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-top: calc(var(--header-height) * -1);
+            padding-top: calc(var(--header-height) + 5rem);
         }
         
         .page-header::before {
@@ -313,7 +312,7 @@
         footer {
             background-color: #2b2d42;
             color: white;
-            padding: 5rem 0 2rem;
+            padding: 5rem 0 1rem;
             position: relative;
         }
         
@@ -391,12 +390,12 @@
         }
         
         .footer-bottom {
-            margin-top: 4rem;
+            margin-top: 2rem;
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         @media (max-width: 768px) {
